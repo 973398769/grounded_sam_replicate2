@@ -1,6 +1,18 @@
 import os
 import sys
 import subprocess
+
+env_vars = os.environ.copy()
+HOME = os.getcwd()
+sys.path.insert(0, "weights")
+sys.path.insert(0, "weights/GroundingDINO")
+sys.path.insert(0, "weights/segment-anything")
+os.chdir("/src/weights/GroundingDINO")
+subprocess.call([sys.executable, '-m', 'pip', 'install', '-e', '.'], env=env_vars)
+os.chdir("/src/weights/segment-anything")
+subprocess.call([sys.executable, '-m', 'pip', 'install', '-e', '.'], env=env_vars)
+os.chdir(HOME)
+
 import torch
 from typing import Iterator
 from groundingdino.util.slconfig import SLConfig
